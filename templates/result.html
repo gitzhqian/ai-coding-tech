@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>您的个性化行程计划</h2>
+    
+    <div class="itinerary-summary">
+        <h3>行程概览</h3>
+        <pre>{{ itinerary.summary }}</pre>
+    </div>
+    
+    <div class="itinerary-details">
+        <h3>详细行程安排</h3>
+        <div class="timeline">
+            {% for item in itinerary.final_itinerary %}
+            <div class="timeline-item">
+                <div class="time-slot">{{ item.time }}</div>
+                <div class="item-content">
+                    <h4>{{ item.name }}</h4>
+                    <p><strong>类型:</strong> {{ item.type }}</p>
+                    <p><strong>描述:</strong> {{ item.description }}</p>
+                    <p><strong>地点:</strong> {{ item.location }}</p>
+                    <p><strong>时长:</strong> {{ item.duration }} | <strong>费用:</strong> {{ item.price }} | <strong>评分:</strong> {{ item.rating }}</p>
+                    <p><strong>标签:</strong> {{ ', '.join(item.tags) if item.tags else '无' }}</p>
+                    <button type="button" class="btn-commentary"
+                            data-name="{{ item.name }}"
+                            data-city="{{ city }}"
+                            data-type="{{ item.type }}"
+                            data-description="{{ item.description }}"
+                            data-tags="{{ item.tags | join(',') if item.tags else '' }}">景点历史解说</button>
+                    <div class="commentary-panel" hidden></div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="food-recommendation">
+        <h3>餐饮建议</h3>
+        <p>{{ itinerary.food_recommendation }}</p>
+    </div>
+    
+    <div class="travel-info">
+        <h3>旅行信息</h3>
+        <p><strong>总预算:</strong> {{ itinerary.total_budget }}</p>
+        <p><strong>交通方式:</strong> {{ itinerary.transportation }}</p>
+        <p><strong>旅行节奏:</strong> {{ itinerary.travel_pace }}</p>
+        <p><strong>生成时间:</strong> {{ itinerary.generated_at }}</p>
+    </div>
+    
+    {% if itinerary.dynamic_info %}
+    <div class="dynamic-info">
+        <h3>动态信息</h3>
+        <p>{{ itinerary.dynamic_info }}</p>
+    </div>
+    {% endif %}
+    
+    {% if itinerary.reasoning %}
+    <div class="reasoning">
+        <h3>AI推荐理由</h3>
+        <p>{{ itinerary.reasoning }}</p>
+    </div>
+    {% endif %}
+    
+    <div class="actions">
+        <a href="{{ url_for('index') }}" class="btn-secondary">重新生成行程</a>
+    </div>
+</div>
+{% endblock %}

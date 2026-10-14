@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>旅行偏好设置</h2>
+    {% if error %}
+        <div class="alert alert-error">{{ error }}</div>
+    {% endif %}
+    
+    <form method="POST" action="{{ url_for('generate_itinerary') }}" id="travel-form">
+        <div class="form-group">
+            <label for="city">目的地城市 *</label>
+            <input type="text" id="city" name="city" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="date">旅行日期 *</label>
+            <input type="date" id="date" name="date" required>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="start_time">开始时间</label>
+                <input type="time" id="start_time" name="start_time" value="09:00">
+            </div>
+            
+            <div class="form-group">
+                <label for="end_time">结束时间</label>
+                <input type="time" id="end_time" name="end_time" value="18:00">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="budget">预算 (元)</label>
+            <input type="number" id="budget" name="budget" value="500" min="0">
+        </div>
+        
+        <div class="form-group">
+            <label>兴趣偏好</label>
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="interests" value="历史文化"> 历史文化</label>
+                <label><input type="checkbox" name="interests" value="自然风光"> 自然风光</label>
+                <label><input type="checkbox" name="interests" value="美食"> 美食</label>
+                <label><input type="checkbox" name="interests" value="购物"> 购物</label>
+                <label><input type="checkbox" name="interests" value="艺术"> 艺术</label>
+                <label><input type="checkbox" name="interests" value="户外运动"> 户外运动</label>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="food_preference">饮食偏好</label>
+            <select id="food_preference" name="food_preference">
+                <option value="">请选择</option>
+                <option value="清淡">清淡</option>
+                <option value="重口味">重口味</option>
+                <option value="素食">素食</option>
+                <option value="海鲜">海鲜</option>
+                <option value="川菜">川菜</option>
+                <option value="粤菜">粤菜</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="transportation">交通方式</label>
+            <select id="transportation" name="transportation">
+                <option value="步行">步行</option>
+                <option value="公交">公交</option>
+                <option value="地铁">地铁</option>
+                <option value="打车">打车</option>
+                <option value="共享单车">共享单车</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="travel_pace">旅行节奏</label>
+            <select id="travel_pace" name="travel_pace">
+                <option value="快">快节奏</option>
+                <option value="适中" selected>适中</option>
+                <option value="慢">慢节奏</option>
+            </select>
+        </div>
+        
+        <button type="submit" class="btn-primary">生成个性化行程</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+Flask==2.3.3
+openai==1.3.5
+python-dotenv==1.0.0
+
+# utils/ai_client.py imports httpx directly (custom httpx.Client with trust_env=False
+# to bypass Windows system proxy). It was previously pulled in only transitively by
+# openai, which makes it an implicit dependency - declared explicitly here.
+# openai==1.3.5 requires httpx>=0.23.0,<0.28.0, so 0.27.2 is compatible.
+httpx==0.27.2
+
+# IMPORTANT: keep this file ASCII-only.
+# The pip bundled with Python 3.8 decodes requirements files using the OS locale
+# (GBK on Chinese Windows), so non-ASCII comments here raise:
+#   UnicodeDecodeError: 'gbk' codec can't decode byte 0x..
+# Put Chinese notes in README.md / INSTALLATION.md instead.
